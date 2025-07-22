@@ -29,7 +29,7 @@ const Navbar = () => {
       {/* Logo & Site Name */}
       <div className={`flex items-center gap-2 ${textColorClass}`}>
         <img src={Logo} alt="Logo" className="w-8 h-8 rounded-full" />
-        <span className="font-bold text-lg">ForumX</span>
+        <span className="font-bold text-lg">Forum Nest</span>
       </div>
 
       {/* Desktop Menu */}

@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCKX_0gTmPZE6gGcth0qO_j1ZuGWlkJyFY",
-  authDomain: "forumnest-9712e.firebaseapp.com",
-  projectId: "forumnest-9712e",
-  storageBucket: "forumnest-9712e.firebasestorage.app",
-  messagingSenderId: "269492329691",
-  appId: "1:269492329691:web:d97f6f5a047d53a404c0fe"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

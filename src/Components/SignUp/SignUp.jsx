@@ -91,12 +91,37 @@ const SignUp = () => {
             required
           />
           <input
-            type="text"
-            name="photo"
-            placeholder="Photo URL (optional)"
-            className={inputClass}
-            onChange={handleChange}
+            type="file"
+            accept="image/*"
+            className={`${inputClass} file:text-sm file:border-0 file:bg-transparent`}
+            onChange={async (e) => {
+              const image = e.target.files[0];
+              if (!image) return;
+
+              const formDataImage = new FormData();
+              formDataImage.append('image', image);
+
+              try {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_IMGBB_API_KEY}`, {
+                  method: 'POST',
+                  body: formDataImage,
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                  setFormData(prev => ({ ...prev, photo: data.data.url }));
+                  
+                } else {
+                  console.error(data);
+                  Swal.fire('Error', 'Something went wrong uploading the image.', 'error');
+                }
+              } catch (err) {
+                console.error(err);
+                Swal.fire('Error', 'Something went wrong uploading the image.', 'error');
+              }
+            }}
           />
+
           <input
             type="email"
             name="email"

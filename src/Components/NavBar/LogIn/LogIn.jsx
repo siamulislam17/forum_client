@@ -100,7 +100,7 @@ const LogIn = () => {
                     <button
                         type="button"
                         onClick={GoogleLogIn}
-                        className="w-full border border-gray-400 flex items-center justify-center gap-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                        className="w-full border border-gray-400 flex items-center justify-center gap-2 p-2 rounded "
                     >
                         <FaGoogle /> Sign in with Google
                     </button>
