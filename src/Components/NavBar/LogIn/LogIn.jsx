@@ -3,6 +3,7 @@ import { AuthContext } from '../../../Context/AuthContext';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 const LogIn = () => {
     const { SignIn, GoogleLogIn, toggleDarkMode } = useContext(AuthContext);
@@ -14,11 +15,21 @@ const LogIn = () => {
         const email = form.email.value;
         const password = form.password.value;
         SignIn(email, password)
-            .then(res => {
-                console.log('Logged in:', res.user);
+            .then(() => {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Login Successful',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                form.reset();
             })
             .catch(err => {
-                console.error(err.message);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Failed',
+                    text: err.message
+                })
             });
     };
 
@@ -55,7 +66,7 @@ const LogIn = () => {
                             type="email"
                             name="email"
                             required
-                            className="w-full p-2 rounded border mt-1 dark:bg-gray-700"
+                            className="w-full p-2 rounded border border-gray-300 mt-1 dark:bg-gray-700"
                         />
                     </div>
 
@@ -66,7 +77,7 @@ const LogIn = () => {
                             type={showPassword ? 'text' : 'password'}
                             name="password"
                             required
-                            className="w-full p-2 rounded border mt-1 dark:bg-gray-700"
+                            className="w-full p-2 rounded border border-gray-300  mt-1 dark:bg-gray-700"
                         />
                         <button
                             type="button"

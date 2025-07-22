@@ -6,7 +6,7 @@ const HomeLayout = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <div className='mt-20'>
+            <div className=''>
                 <Outlet></Outlet>
             </div>
             
