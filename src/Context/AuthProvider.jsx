@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-import auth from '../FireBaseOperations/fireBase.config';
+
 import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { AuthContext } from './AuthContext';
+import { auth } from '../FireBaseFunctionality/firebase.config';
 
 const AuthProvider = ({children}) => {
     const [user,setUser] = useState(null);
@@ -56,6 +57,9 @@ const AuthProvider = ({children}) => {
         return signOut(auth);
     }
 
+     // Dark mode toggle
+    const [toggleDarkMode, setToggleDarkMode] = useState(false);
+
     const AuthInfo = {
         CreateAccountWithEmail,
         SignIn,
@@ -66,7 +70,8 @@ const AuthProvider = ({children}) => {
         userLogOut,
         GoogleLogIn,
         UserUpdate,
-        logOutUser
+        logOutUser,
+        toggleDarkMode, setToggleDarkMode
     }
     return (
        <AuthContext value={AuthInfo}>
