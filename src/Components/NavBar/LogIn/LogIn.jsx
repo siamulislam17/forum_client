@@ -1,0 +1,108 @@
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../Context/AuthContext';
+import { Typewriter } from 'react-simple-typewriter';
+import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
+import { Link } from 'react-router';
+
+const LogIn = () => {
+    const { SignIn, GoogleLogIn, toggleDarkMode } = useContext(AuthContext);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        SignIn(email, password)
+            .then(res => {
+                console.log('Logged in:', res.user);
+            })
+            .catch(err => {
+                console.error(err.message);
+            });
+    };
+
+    return (
+        <div className={`min-h-screen flex flex-col md:flex-row items-center justify-center
+            ${toggleDarkMode
+                ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white'
+                : 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-gray-800'}`}>
+            
+            {/* Left Banner */}
+            <div className="md:w-1/2 w-full p-8 text-center">
+                <h1 className="text-3xl md:text-5xl font-bold mb-4">
+                    <Typewriter
+                        words={['Join the community', 'Explore more of your life']}
+                        loop={true}
+                        cursor
+                        cursorStyle='_'
+                        typeSpeed={70}
+                        deleteSpeed={50}
+                        delaySpeed={1500}
+                    />
+                </h1>
+            </div>
+
+            {/* Right Form */}
+            <div className="md:w-1/2 w-full p-8">
+                <form onSubmit={handleLogin} className={`space-y-4  ${toggleDarkMode ? 'bg-gray-800' : 'bg-white'} p-6 rounded-xl shadow-lg`}>
+                    <h2 className="text-2xl font-semibold text-center mb-4">Login</h2>
+
+                    {/* Email */}
+                    <div>
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            className="w-full p-2 rounded border mt-1 dark:bg-gray-700"
+                        />
+                    </div>
+
+                    {/* Password */}
+                    <div className="relative">
+                        <label>Password</label>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name="password"
+                            required
+                            className="w-full p-2 rounded border mt-1 dark:bg-gray-700"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-9 text-xl text-gray-600 dark:text-gray-300"
+                        >
+                            {showPassword ? <FaEyeSlash /> : <FaEye />}
+                        </button>
+                    </div>
+
+                    {/* Submit Button */}
+                    <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
+                        Log In
+                    </button>
+
+                    {/* Divider */}
+                    <div className="divider">or</div>
+
+                    {/* Google Login */}
+                    <button
+                        type="button"
+                        onClick={GoogleLogIn}
+                        className="w-full border border-gray-400 flex items-center justify-center gap-2 p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
+                    >
+                        <FaGoogle /> Sign in with Google
+                    </button>
+
+                    {/* Sign up link */}
+                    <p className="text-center mt-4">
+                        Don’t have an account?{' '}
+                        <Link to="/signup" className="text-blue-600 hover:underline">Sign Up</Link>
+                    </p>
+                </form>
+            </div>
+        </div>
+    );
+};
+
+export default LogIn;

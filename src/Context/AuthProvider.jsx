@@ -71,7 +71,8 @@ const AuthProvider = ({children}) => {
         GoogleLogIn,
         UserUpdate,
         logOutUser,
-        toggleDarkMode, setToggleDarkMode
+        toggleDarkMode,
+        setToggleDarkMode
     }
     return (
        <AuthContext value={AuthInfo}>
