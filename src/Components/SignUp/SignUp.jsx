@@ -4,13 +4,15 @@ import { Link, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
+import axios from 'axios';
 
 const SignUp = () => {
   const {
     CreateAccountWithEmail,
     GoogleLogIn,
     UserUpdate,
-    toggleDarkMode
+    toggleDarkMode,
+    user
   } = useContext(AuthContext);
 
   const [showPassword, setShowPassword] = useState(false);
@@ -28,6 +30,16 @@ const SignUp = () => {
     try {
       await CreateAccountWithEmail(email, password);
       await UserUpdate(name, photo);
+
+      
+    // ✅ Send user info to backend
+      await axios.post('http://localhost:3000/users', {
+        name,
+        email,
+        photo,
+        role: 'user', // default role
+      });
+
       Swal.fire('Success!', 'Account created successfully!', 'success');
       navigate('/');
     } catch (err) {
@@ -38,6 +50,14 @@ const SignUp = () => {
   const handleGoogle = async () => {
     try {
       await GoogleLogIn();
+
+        // ✅ Send user info to backend
+        await axios.post('http://localhost:3000/users', {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+          role: 'user',
+        });
       Swal.fire('Welcome!', 'Logged in with Google!', 'success');
       navigate('/');
     } catch (err) {
