@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import axios from 'axios';
+import UseURL from '../../UrlInstance/UseURL';
+
 
 const SignUp = () => {
   const {
@@ -15,6 +17,8 @@ const SignUp = () => {
     user
   } = useContext(AuthContext);
 
+
+  const axiosUrl = UseURL();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({ name: '', photo: '', email: '', password: '' });
   const navigate = useNavigate();
@@ -33,11 +37,12 @@ const SignUp = () => {
 
       
     // ✅ Send user info to backend
-      await axios.post('http://localhost:3000/users', {
+      await axiosUrl.post('/users', {
         name,
         email,
         photo,
         role: 'user', // default role
+        mebbership: false // default mebbership
       });
 
       Swal.fire('Success!', 'Account created successfully!', 'success');
@@ -49,14 +54,17 @@ const SignUp = () => {
 
   const handleGoogle = async () => {
     try {
-      await GoogleLogIn();
+      const result = await GoogleLogIn();
+      const loggedUser = result.user;
 
         // ✅ Send user info to backend
-        await axios.post('http://localhost:3000/users', {
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-          role: 'user',
+        await axiosUrl.post('/users', {
+            name: loggedUser.displayName,
+            email: loggedUser.email,
+            photo: loggedUser.photoURL,
+            role: 'user',
+            membership: false,
+
         });
       Swal.fire('Welcome!', 'Logged in with Google!', 'success');
       navigate('/');

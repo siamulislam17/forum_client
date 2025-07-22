@@ -6,6 +6,8 @@ import HomePage from "../HomePage/HomePage";
 import HomeLayout from "../HomePage/HomeLayout";
 import LogIn from "../Components/NavBar/LogIn/LogIn";
 import SignUp from "../Components/SignUp/SignUp";
+import PrivateRoute from "../PrivateRoutes/PrivateRouteUser/PrivateRoute";
+import Membership from "../Pages/Membership/Membersip";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,12 @@ export const router = createBrowserRouter([
         {
             path: 'signup',
             element: <SignUp></SignUp>
+        },
+        {
+            path: 'membership',
+            element: <PrivateRoute>
+                <Membership></Membership>
+            </PrivateRoute>
         }
     ],
   },

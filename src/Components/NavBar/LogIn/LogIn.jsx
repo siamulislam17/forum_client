@@ -4,9 +4,10 @@ import { Typewriter } from 'react-simple-typewriter';
 import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const LogIn = () => {
-    const { SignIn, GoogleLogIn, toggleDarkMode } = useContext(AuthContext);
+    const { SignIn, GoogleLogIn, toggleDarkMode, user } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
 
     const handleLogin = (e) => {
@@ -31,7 +32,32 @@ const LogIn = () => {
                     text: err.message
                 })
             });
-    };
+            
+       
+    
+        };
+         // with goolge
+        const HandleGoogleLogIn = async () => {
+            try {
+                const result = await GoogleLogIn();
+                const loggedUser = result.user;
+
+                // Send user data to DB
+                await axios.post('http://localhost:3000/users', {
+                    name: loggedUser.displayName,
+                    email: loggedUser.email,
+                    photo: loggedUser.photoURL,
+                    role: 'user',
+                    membership: false
+                });
+
+                Swal.fire('Welcome!', 'Logged in with Google!', 'success');
+            } catch (err) {
+                Swal.fire('Error!', err.message, 'error');
+            }
+        };
+
+
 
     return (
         <div className={`min-h-screen flex flex-col md:flex-row items-center justify-center
@@ -99,7 +125,7 @@ const LogIn = () => {
                     {/* Google Login */}
                     <button
                         type="button"
-                        onClick={GoogleLogIn}
+                        onClick={HandleGoogleLogIn}
                         className="w-full border border-gray-400 flex items-center justify-center gap-2 p-2 rounded "
                     >
                         <FaGoogle /> Sign in with Google
