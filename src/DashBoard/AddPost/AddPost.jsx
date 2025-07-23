@@ -140,7 +140,10 @@ const AddPost = () => {
   }
 
   return (
-    <div className={`max-w-4xl  mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+    <div className={`max-w-4xl  mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${ toggleDarkMode
+    ? 'bg-gray-800 text-white'
+        : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-80 text-white'
+    }'}`}>
       <h2 className="text-3xl font-bold mb-6 text-center">Add New Post</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         

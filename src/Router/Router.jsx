@@ -10,6 +10,7 @@ import PrivateRoute from "../PrivateRoutes/PrivateRouteUser/PrivateRoute";
 import Membership from "../Pages/Membership/Membersip";
 import DashBoardLayOut from "../DashBoard/DashBoardLayOut/DashBoardLayOut";
 import AddPost from "../DashBoard/AddPost/AddPost";
+import MyPosts from "../DashBoard/MyPost/MyPost";
 
 export const router = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
         {
             path: 'add-post',
             element: <AddPost></AddPost>
+        },
+        {
+            path: 'my-posts',
+            element: <MyPosts></MyPosts>
         }
     ]
   }
