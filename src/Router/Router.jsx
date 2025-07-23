@@ -8,6 +8,7 @@ import LogIn from "../Components/NavBar/LogIn/LogIn";
 import SignUp from "../Components/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoutes/PrivateRouteUser/PrivateRoute";
 import Membership from "../Pages/Membership/Membersip";
+import DashBoardLayOut from "../DashBoard/DashBoardLayOut/DashBoardLayOut";
 
 export const router = createBrowserRouter([
   {
@@ -30,8 +31,18 @@ export const router = createBrowserRouter([
             path: 'membership',
             element: <PrivateRoute>
                 <Membership></Membership>
+                
             </PrivateRoute>
         }
     ],
   },
+  {
+    path: 'dashboard',
+    element: <PrivateRoute><DashBoardLayOut></DashBoardLayOut></PrivateRoute>,
+    children:[
+        {
+
+        }
+    ]
+  }
 ]);
