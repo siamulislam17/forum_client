@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
 
+
 const AddPost = () => {
   const { user, toggleDarkMode } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
