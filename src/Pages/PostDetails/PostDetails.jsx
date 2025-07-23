@@ -3,10 +3,12 @@ import { useParams } from 'react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 
-import { FacebookShareButton, FacebookIcon } from 'react-share';
+import { FacebookShareButton, FacebookIcon, TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon } from 'react-share';
 import { AuthContext } from '../../Context/AuthContext';
 
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
+import { X } from 'lucide-react';
+import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -96,24 +98,33 @@ const PostDetail = () => {
           <button
             onClick={() => upvoteMutation.mutate()}
             disabled={upvoteMutation.isLoading}
-            className="flex items-center gap-2 px-3 py-1 rounded bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white"
+            className="flex items-center gap-2 px-4 rounded-2xl py-1.5 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white"
             aria-label="Upvote Post"
-          >
-            👍 Upvote ({post.upVote || 0})
-          </button>
+        >
+            <FaThumbsUp /> ({post.upVote || 0})
+        </button>
 
-          <button
+        <button
             onClick={() => downvoteMutation.mutate()}
             disabled={downvoteMutation.isLoading}
-            className="flex items-center gap-2 px-3 py-1 rounded bg-red-600 hover:bg-red-700 disabled:opacity-50 text-white"
+            className="flex items-center gap-2 px-4 rounded-2xl py-1.5 bg-red-500 hover:bg-red-700 disabled:opacity-50 text-white"
             aria-label="Downvote Post"
-          >
-            👎 Downvote ({post.downVote || 0})
-          </button>
+        >
+            <FaThumbsDown /> ({post.downVote || 0})
+        </button>
+
 
           <FacebookShareButton url={window.location.href} quote={post.title}>
             <FacebookIcon size={36} round />
           </FacebookShareButton>
+
+          <TwitterShareButton url={window.location.href} quote={post.title}>
+            <TwitterIcon size={36} round />
+          </TwitterShareButton>
+
+          <LinkedinShareButton url={window.location.href} quote={post.title}>
+            <LinkedinIcon size={36} round />
+          </LinkedinShareButton>
         </div>
 
         {/* Comments Section */}
