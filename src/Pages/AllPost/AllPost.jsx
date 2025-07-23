@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaThumbsUp, FaThumbsDown, FaSun, FaMoon } from 'react-icons/fa';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -30,23 +30,38 @@ const AllPost = () => {
     keepPreviousData: true,
   });
 
+  const axiosSecure = UseAsios(); // Your axios instance
+  const queryClient = useQueryClient();
+   
+const upvoteMutation = useMutation({
+  mutationFn: (postId) => axiosSecure.post(`/posts/${postId}/upvote`),
+  onSuccess: () => {
+    queryClient.invalidateQueries(['posts']);
+  },
+});
+
+const downvoteMutation = useMutation({
+  mutationFn: (postId) => axiosSecure.post(`/posts/${postId}/downvote`),
+  onSuccess: () => {
+    queryClient.invalidateQueries(['posts']);
+  },
+});
+
+
   const handleUpvote = (postId) => {
-    console.log('Upvoted post:', postId);
-    // TODO: implement backend upvote call later
+    upvoteMutation.mutate(postId);
   };
 
   const handleDownvote = (postId) => {
-    console.log('Downvoted post:', postId);
-    // TODO: implement backend downvote call later
+    downvoteMutation.mutate(postId);
   };
+  
 
-  const toggleDark = () => setToggleDarkMode(!toggleDarkMode);
-
-  if (isLoading) return <p className="text-center py-10">Loading posts...</p>;
+  if (isLoading) return <p className="text-center py-10"><span className="loading loading-dots loading-lg"></span></p>;
   if (error) return <p className="text-center py-10 text-red-600">Error loading posts.</p>;
 
   return (
-    <div className={`${toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen px-4 py-6 transition-colors duration-500`}>
+    <div className={`${toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-emerald-200 to-emerald-200 text-gray-700'} min-h-screen px-4 py-6 transition-colors duration-500`}>
       <div className="max-w-5xl mx-auto">
         
 
@@ -58,7 +73,7 @@ const AllPost = () => {
                 ? 'bg-blue-600 text-white'
                 : toggleDarkMode
                 ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+                : 'bg-gradient-to-r from-emerald-500 to-emerald-700 text-white'
             }`}
             onClick={() => {
               setSortBy('date');
@@ -74,7 +89,7 @@ const AllPost = () => {
                 ? 'bg-blue-600 text-white'
                 : toggleDarkMode
                 ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
+                : 'bg-gradient-to-r from-emerald-500 to-emerald-700 text-white'
             }`}
             onClick={() => {
               setSortBy('popularity');
@@ -94,11 +109,11 @@ const AllPost = () => {
               return (
                 <li
                   key={post._id}
-                  className={`p-6 rounded shadow-md transition-colors ${
-                    toggleDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:bg-gray-50'
+                  className={`p-6  rounded shadow-md hover:shadow-lg transition-colors ${
+                    toggleDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:scale-101 transition-transform duration-300 '
                   }`}
                 >
-                  <div className="flex items-center gap-4 mb-3">
+                  <div className="flex  items-center gap-4 mb-3">
                     <img
                       src={post.authorImage || '/default-profile.png'}
                       alt={post.author || 'Author'}
@@ -112,7 +127,7 @@ const AllPost = () => {
                     </div>
                   </div>
 
-                  <p className="mb-3">{post.description?.slice(0, 150) || 'No description'}...</p>
+                  <p className="mb-3">{post.content?.slice(0, 150) || 'No description'}...</p>
 
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center gap-4 text-gray-600 dark:text-gray-400">
