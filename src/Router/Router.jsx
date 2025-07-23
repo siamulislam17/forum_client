@@ -9,6 +9,7 @@ import SignUp from "../Components/SignUp/SignUp";
 import PrivateRoute from "../PrivateRoutes/PrivateRouteUser/PrivateRoute";
 import Membership from "../Pages/Membership/Membersip";
 import DashBoardLayOut from "../DashBoard/DashBoardLayOut/DashBoardLayOut";
+import AddPost from "../DashBoard/AddPost/AddPost";
 
 export const router = createBrowserRouter([
   {
@@ -37,11 +38,12 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: 'dashboard',
+    path: '/dashboard',
     element: <PrivateRoute><DashBoardLayOut></DashBoardLayOut></PrivateRoute>,
     children:[
         {
-
+            path: 'add-post',
+            element: <AddPost></AddPost>
         }
     ]
   }
