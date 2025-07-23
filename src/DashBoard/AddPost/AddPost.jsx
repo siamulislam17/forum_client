@@ -3,9 +3,11 @@ import Select from 'react-select';
 import Swal from 'sweetalert2';
 
 import tagsData from '../../../public/tags.json';
+
+import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
-import { useNavigate } from 'react-router';
+
 const AddPost = () => {
   const { user, toggleDarkMode } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
@@ -21,19 +23,26 @@ const AddPost = () => {
   });
 
   const [postCount, setPostCount] = useState(0);
+  const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // 🔄 Fetch post count when user is available
   useEffect(() => {
-    const fetchPostCount = async () => {
+    const fetchUserAndPosts = async () => {
       if (!user?.email) return;
+
       try {
-        const res = await axiosSecure.get(`/posts?email=${user.email}`);
-        const count = res.data?.length || 0;
+        // Fetch user info with membership status
+        const userRes = await axiosSecure.get(`/users?email=${user.email}`);
+        const currentUser = userRes.data?.[0]; // assuming array with one user
+        setUserInfo(currentUser);
+
+        // Fetch posts count by user email
+        const postsRes = await axiosSecure.get(`/posts?email=${user.email}`);
+        const count = postsRes.data?.length || 0;
         setPostCount(count);
 
-        // ⚠️ Warn when only 1 post left
-        if (count === 4) {
+        // Show warning if non-member has 4 posts
+        if (currentUser?.membership === false && count === 4) {
           Swal.fire({
             icon: 'info',
             title: 'One Post Left',
@@ -41,13 +50,13 @@ const AddPost = () => {
           });
         }
       } catch (err) {
-        console.error('Error fetching post count:', err);
+        console.error('Error fetching user or posts:', err);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchPostCount();
+    fetchUserAndPosts();
   }, [user?.email, axiosSecure]);
 
   const handleChange = (e) => {
@@ -63,14 +72,19 @@ const AddPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (userInfo?.membership === false && postCount >= 5) {
+      Swal.fire('Limit reached', 'You cannot post more than 5 posts. Please become a member.', 'warning');
+      return;
+    }
+
     try {
       const res = await axiosSecure.post('/posts', {
-      ...formData,
-      date: new Date(),
-      upVote: 0,
-      downVote: 0,
-      comments: [],
-    });
+        ...formData,
+        date: new Date(),
+        upVote: 0,
+        downVote: 0,
+        comments: [],
+      });
 
       if (res.data.insertedId) {
         Swal.fire('Success', 'Post added!', 'success');
@@ -124,7 +138,8 @@ const AddPost = () => {
 
   if (isLoading) return <div className="text-center">Loading...</div>;
 
-  if (postCount >= 5) {
+  // Block post UI for non-members who reached limit
+  if (userInfo?.membership === false && postCount >= 5) {
     return (
       <div className={`max-w-4xl mx-auto p-6 rounded-xl shadow-lg text-center ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         <h2 className="text-3xl font-bold mb-4">Post Limit Reached</h2>
@@ -140,13 +155,9 @@ const AddPost = () => {
   }
 
   return (
-    <div className={`max-w-4xl  mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${ toggleDarkMode
-    ? 'bg-gray-800 text-white'
-        : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-80 text-white'
-    }'}`}>
+    <div className={`max-w-4xl mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-80 text-white'}`}>
       <h2 className="text-3xl font-bold mb-6 text-center">Add New Post</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-        
         {/* Title */}
         <div>
           <label className="block mb-2 font-medium">Title</label>
@@ -219,4 +230,5 @@ const AddPost = () => {
     </div>
   );
 };
+
 export default AddPost;
