@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAsios from '../../UrlInstance/UseURL';
+import { useNavigate } from 'react-router';
 
 dayjs.extend(relativeTime);
 
@@ -18,7 +19,7 @@ const fetchPosts = async ({ queryKey }) => {
 };
 
 const AllPost = () => {
-  const { toggleDarkMode, setToggleDarkMode } = useContext(AuthContext);
+  const { toggleDarkMode} = useContext(AuthContext);
 
   const [sortBy, setSortBy] = useState('date');
   const [page, setPage] = useState(1);
@@ -55,7 +56,13 @@ const downvoteMutation = useMutation({
   const handleDownvote = (postId) => {
     downvoteMutation.mutate(postId);
   };
-  
+
+  const navigate = useNavigate();
+
+    const goToPostDetails = (postId) => {
+    navigate(`/post/${postId}`);
+    }
+    
 
   if (isLoading) return <p className="text-center py-10"><span className="loading loading-dots loading-lg"></span></p>;
   if (error) return <p className="text-center py-10 text-red-600">Error loading posts.</p>;
@@ -108,6 +115,7 @@ const downvoteMutation = useMutation({
 
               return (
                 <li
+                  onClick={() => goToPostDetails(post._id)}
                   key={post._id}
                   className={`p-6  rounded shadow-md hover:shadow-lg transition-colors ${
                     toggleDarkMode ? 'bg-gray-800 hover:bg-gray-700' : 'bg-white hover:scale-101 transition-transform duration-300 '
