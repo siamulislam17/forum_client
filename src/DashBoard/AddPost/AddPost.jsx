@@ -5,10 +5,11 @@ import Swal from 'sweetalert2';
 import tagsData from '../../../public/tags.json';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
-
+import { useNavigate } from 'react-router';
 const AddPost = () => {
   const { user, toggleDarkMode } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: '',
@@ -18,6 +19,36 @@ const AddPost = () => {
     author: user?.displayName || '',
     email: user?.email || '',
   });
+
+  const [postCount, setPostCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // 🔄 Fetch post count when user is available
+  useEffect(() => {
+    const fetchPostCount = async () => {
+      if (!user?.email) return;
+      try {
+        const res = await axiosSecure.get(`/posts?email=${user.email}`);
+        const count = res.data?.length || 0;
+        setPostCount(count);
+
+        // ⚠️ Warn when only 1 post left
+        if (count === 4) {
+          Swal.fire({
+            icon: 'info',
+            title: 'One Post Left',
+            text: 'You can only post once more. Become a member to unlock more!',
+          });
+        }
+      } catch (err) {
+        console.error('Error fetching post count:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPostCount();
+  }, [user?.email, axiosSecure]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -34,11 +65,12 @@ const AddPost = () => {
 
     try {
       const res = await axiosSecure.post('/posts', {
-        ...formData,
-        date: new Date(),
-        voteCount: 0,
-        comments: [],
-      });
+      ...formData,
+      date: new Date(),
+      upVote: 0,
+      downVote: 0,
+      comments: [],
+    });
 
       if (res.data.insertedId) {
         Swal.fire('Success', 'Post added!', 'success');
@@ -50,6 +82,8 @@ const AddPost = () => {
           author: user?.displayName || '',
           email: user?.email || '',
         });
+
+        setPostCount((prev) => prev + 1);
       }
     } catch (err) {
       console.error(err);
@@ -88,6 +122,23 @@ const AddPost = () => {
     }),
   };
 
+  if (isLoading) return <div className="text-center">Loading...</div>;
+
+  if (postCount >= 5) {
+    return (
+      <div className={`max-w-4xl mx-auto p-6 rounded-xl shadow-lg text-center ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+        <h2 className="text-3xl font-bold mb-4">Post Limit Reached</h2>
+        <p className="mb-6">You've reached the post limit for non-members.</p>
+        <button
+          onClick={() => navigate('/membership')}
+          className="btn btn-primary rounded-md"
+        >
+          Become a Member
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className={`max-w-4xl  mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
       <h2 className="text-3xl font-bold mb-6 text-center">Add New Post</h2>
@@ -106,7 +157,8 @@ const AddPost = () => {
             required
           />
         </div>
-         {/* Tags */}
+
+        {/* Tags */}
         <div>
           <label className="block mb-2 font-medium">Tags</label>
           <Select
@@ -154,8 +206,6 @@ const AddPost = () => {
           )}
         </div>
 
-       
-
         {/* Submit */}
         <div>
           <button type="submit" className="btn btn-primary w-full rounded-md">
@@ -166,5 +216,4 @@ const AddPost = () => {
     </div>
   );
 };
-
 export default AddPost;
