@@ -7,6 +7,8 @@ import { FaSearch, FaSadTear } from 'react-icons/fa';
 import Animation from '../../../public/STUDENT.json';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAsios from '../../UrlInstance/UseURL';
+import { useNavigate } from 'react-router';
+
 
 
 
@@ -17,7 +19,10 @@ const fetchSearchPosts = async ({ queryKey }) => {
   return Array.isArray(data) ? data : []; // 💡 Safely ensure it’s an array
 };
 
+
 const Banner = () => {
+    
+  const navigate = useNavigate();
   const { toggleDarkMode } = useContext(AuthContext);
   const [tag, setTag] = useState('');
   const [searchTag, setSearchTag] = useState('');
@@ -89,21 +94,35 @@ const Banner = () => {
           </div>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-            {posts.map((post) => (
-              <div
-                key={post._id}
-                className="p-4 border rounded-md shadow hover:shadow-lg bg-white dark:bg-gray-800"
-              >
-                <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-                <p className="text-gray-600 dark:text-gray-300 mb-1">
-                  {post.description?.slice(0, 100)}...
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Tags: {post.tags?.join(', ')}
-                </p>
-              </div>
-            ))}
-          </div>
+        {posts.map((post) => (
+            <div
+            onClick={() => navigate(`/post/${post._id}`)}
+            key={post._id}
+            className="p-6 rounded-2xl shadow-md border border-gray-200 dark:border-gray-700 transition hover:scale-[1.02] hover:shadow-xl bg-white dark:bg-gray-900 duration-300"
+            >
+            <h2 className="text-2xl font-semibold text-gray-800 dark:text-white mb-3">
+                {post.title}
+            </h2>
+
+            <p className="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+                {post.content?.slice(0, 120)}...
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+                {post.tags?.map((tag, index) => (
+                <span
+                    key={index}
+                    className="text-sm font-medium px-3 py-1 bg-blue-100 text-blue-700 rounded-full dark:bg-blue-800 dark:text-blue-100"
+                >
+                    #{tag}
+                </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+            
         )}
       </div>
     </div>
