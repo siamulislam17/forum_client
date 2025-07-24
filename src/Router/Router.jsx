@@ -12,6 +12,7 @@ import DashBoardLayOut from "../DashBoard/DashBoardLayOut/DashBoardLayOut";
 import AddPost from "../DashBoard/AddPost/AddPost";
 import MyPosts from "../DashBoard/MyPost/MyPost";
 import PostDetail from "../Pages/PostDetails/PostDetails";
+import CommentPage from "../DashBoard/CommentFidbackPage/CommentFeedback";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ export const router = createBrowserRouter([
         {
             path: 'my-posts',
             element: <MyPosts></MyPosts>
+        },
+        {
+            path: 'comment/:id',
+            element: <CommentPage></CommentPage>
         }
     ]
   }

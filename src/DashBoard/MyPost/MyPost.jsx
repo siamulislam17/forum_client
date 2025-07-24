@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
+import { useNavigate } from 'react-router';
 
 
 
@@ -65,13 +66,12 @@ const MyPosts = () => {
   };
 
   // Open comments modal
-  const openComments = (post) => {
-    setCommentsModal({
-      isOpen: true,
-      comments: post.comments || [],
-      postTitle: post.title,
-    });
-  };
+  const navigate = useNavigate();
+
+// Navigate to comment page
+const goToCommentPage = (postId) => {
+  navigate(`/dashboard/comment/${postId}`);
+};
 
   // Close comments modal
   const closeComments = () => {
@@ -115,11 +115,12 @@ const MyPosts = () => {
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">{post.downVote || 0}</td>
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
                     <button
-                      onClick={() => openComments(post)}
+                      onClick={() => goToCommentPage(post._id)}
                       className="btn btn-sm btn-info px-3 py-1 rounded"
                     >
                       Comments
                     </button>
+
                   </td>
                   <td className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-center">
                     <button

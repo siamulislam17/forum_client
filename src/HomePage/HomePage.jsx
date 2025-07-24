@@ -7,7 +7,7 @@ import PostsList from '../Pages/AllPost/AllPost';
 
 const HomePage = () => {
     return (
-        <div className='mt-20'>
+        <div className=''>
             <Banner></Banner>
             <Tags></Tags>
             <PostsList></PostsList>

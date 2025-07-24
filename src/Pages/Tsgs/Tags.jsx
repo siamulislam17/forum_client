@@ -25,7 +25,7 @@ const Tags = () => {
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
       }`}
     >
-      <h2 className="text-3xl font-bold text-center mb-6">🔍 Explore Tags</h2>
+      <h2 className="text-3xl font-bold text-center mb-6"> Explore Tags</h2>
 
       <div className="flex flex-wrap justify-center gap-4">
         {tags.map((tag, idx) => (
