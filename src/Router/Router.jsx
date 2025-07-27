@@ -17,6 +17,7 @@ import MyProfile from "../DashBoard/MyProfile/MyProfile";
 import ManageUsers from "../DashBoard/Admin Dashboard/ManageUsers/ManageUsers";
 import ReportedActivities from "../DashBoard/Admin Dashboard/ReportedCommentsManage/ReportedComment";
 import MakeAnnouncement from "../DashBoard/Admin Dashboard/CreateAnnouncement/CreateAnnouncement";
+import AdminProfile from "../DashBoard/Admin Dashboard/AdminProfile/AdminProfile";
 
 export const router = createBrowserRouter([
   {
@@ -79,6 +80,10 @@ export const router = createBrowserRouter([
         {
             path: 'announcement',
             element: <MakeAnnouncement></MakeAnnouncement>
+        },
+        {
+            path: 'admin-profile',
+            element: <AdminProfile></AdminProfile>
         }
     ]
   }
