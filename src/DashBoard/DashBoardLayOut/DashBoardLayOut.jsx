@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router';
+import { NavLink, Outlet } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import { Menu } from 'lucide-react';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
 
 
 const DashBoardLayOut = () => {
-  const { toggleDarkMode, user, loading } = useContext(AuthContext);
+  const { toggleDarkMode, user } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
   const [role, setRole] = useState(null); // 'admin' or 'user'
 

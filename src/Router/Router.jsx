@@ -14,6 +14,9 @@ import MyPosts from "../DashBoard/MyPost/MyPost";
 import PostDetail from "../Pages/PostDetails/PostDetails";
 import CommentPage from "../DashBoard/CommentFidbackPage/CommentFeedback";
 import MyProfile from "../DashBoard/MyProfile/MyProfile";
+import ManageUsers from "../DashBoard/Admin Dashboard/ManageUsers/ManageUsers";
+import ReportedActivities from "../DashBoard/Admin Dashboard/ReportedCommentsManage/ReportedComment";
+import MakeAnnouncement from "../DashBoard/Admin Dashboard/CreateAnnouncement/CreateAnnouncement";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +67,18 @@ export const router = createBrowserRouter([
         {
             path: 'profile',
             element: <MyProfile></MyProfile>
+        },
+        {
+            path: 'manage-users',
+            element: <ManageUsers></ManageUsers>
+        },
+        {
+            path: 'reported-comments',
+            element: <ReportedActivities></ReportedActivities>
+        },
+        {
+            path: 'announcement',
+            element: <MakeAnnouncement></MakeAnnouncement>
         }
     ]
   }

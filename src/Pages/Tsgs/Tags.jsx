@@ -1,23 +1,21 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../Context/AuthContext';
+import UseAsios from '../../UrlInstance/UseURL';
 
 const Tags = () => {
+  const axios= UseAsios();
   const { toggleDarkMode } = useContext(AuthContext);
-  const [tags, setTags] = useState([]);
+  const { data: tags = [], isLoading, isError } = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const res = await axios.get('/tags');
+      return res.data;
+    },
+  });
 
-  useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const res = await fetch('/tags.json'); // From public folder
-        const data = await res.json();
-        setTags(data);
-      } catch (err) {
-        console.error('Failed to load tags:', err);
-      }
-    };
-
-    fetchTags();
-  }, []);
+  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isError) return <div className="text-center py-10 text-red-500">Failed to load tags</div>;
 
   return (
     <div
@@ -25,7 +23,7 @@ const Tags = () => {
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
       }`}
     >
-      <h2 className="text-3xl font-bold text-center mb-6"> Explore Tags</h2>
+      <h2 className="text-3xl font-bold text-center mb-6">Explore Tags</h2>
 
       <div className="flex flex-wrap justify-center gap-4">
         {tags.map((tag, idx) => (
@@ -38,7 +36,6 @@ const Tags = () => {
                   ? 'bg-blue-800 text-blue-100 hover:bg-blue-700'
                   : 'bg-blue-100 text-blue-800 hover:bg-blue-200'
               }`}
-            
           >
             #{tag.label}
           </button>

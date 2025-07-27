@@ -2,11 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
 
-import tagsData from '../../../public/tags.json';
+
 
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
+import { useQuery } from '@tanstack/react-query';
 
 
 const AddPost = () => {
@@ -26,6 +27,14 @@ const AddPost = () => {
   const [postCount, setPostCount] = useState(0);
   const [userInfo, setUserInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { data: tagsData = [], isLoading: tagsLoading } = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/tags');
+      return res.data.map(tag => ({ label: tag.label, value: tag.label }));
+    }
+  });
 
   useEffect(() => {
     const fetchUserAndPosts = async () => {
@@ -181,6 +190,7 @@ const AddPost = () => {
             options={tagsData}
             onChange={handleTagChange}
             value={tagsData.filter((tag) => formData.tags.includes(tag.value))}
+
             styles={customSelectStyles}
             placeholder="Select tags"
             classNamePrefix="react-select"
