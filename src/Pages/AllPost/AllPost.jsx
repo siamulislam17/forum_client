@@ -68,9 +68,10 @@ const downvoteMutation = useMutation({
   if (error) return <p className="text-center py-10 text-red-600">Error loading posts.</p>;
 
   return (
-    <div className={`${toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-emerald-200 to-emerald-200 text-gray-700'} min-h-screen px-4 py-6 transition-colors duration-500`}>
+    <div className={`${toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-700'} min-h-screen px-4 py-6 transition-colors duration-500`}>
+
       <div className="max-w-5xl mx-auto">
-        
+        <h1 className="text-2xl font-bold mb-4">All Posts</h1>
 
         {/* Sort Buttons */}
         <div className="mb-6 flex gap-4">

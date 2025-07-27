@@ -3,6 +3,8 @@ import Navbar from '../Components/NavBar/Navbar';
 import Banner from '../Pages/Banner/Banner';
 import Tags from '../Pages/Tsgs/Tags';
 import PostsList from '../Pages/AllPost/AllPost';
+import Announcements from '../Pages/Announcements/Announcements';
+
 
 
 const HomePage = () => {
@@ -10,6 +12,7 @@ const HomePage = () => {
         <div className=''>
             <Banner></Banner>
             <Tags></Tags>
+            <Announcements></Announcements>
             <PostsList></PostsList>
         </div>
     );
