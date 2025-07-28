@@ -51,7 +51,7 @@ const DashBoardLayOut = () => {
         <div className="drawer-side">
           <label htmlFor="dashboard-drawer" className="drawer-overlay"></label>
           <ul className={`
-            menu p-4 w-72 min-h-full md:m-4 rounded-2xl border shadow-md 
+            menu p-4 w-72 min-h-full md:m-4 rounded-r-2xl md:rounded-2xl border shadow-md 
             ${toggleDarkMode
               ? 'bg-gradient-to-b from-gray-900 via-gray-900 to-gray-900 text-white border-gray-700'
               : 'bg-gradient-to-b from-green-100 via-blue-100 to-red-100 text-black border-gray-300'

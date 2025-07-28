@@ -2,13 +2,19 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../../Context/AuthContext';
 import { Typewriter } from 'react-simple-typewriter';
 import { FaGoogle, FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import UseAsios from '../../../UrlInstance/UseURL';
+
 
 const LogIn = () => {
     const { SignIn, GoogleLogIn, toggleDarkMode, user } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
+    const axiosInstance = UseAsios();
+    
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -24,6 +30,7 @@ const LogIn = () => {
                     timer: 1500
                 });
                 form.reset();
+                navigate(from, { replace: true });
             })
             .catch(err => {
                 Swal.fire({
@@ -32,9 +39,8 @@ const LogIn = () => {
                     text: err.message
                 })
             });
-            
-       
-    
+
+
         };
          // with goolge
         const HandleGoogleLogIn = async () => {
@@ -43,7 +49,7 @@ const LogIn = () => {
                 const loggedUser = result.user;
 
                 // Send user data to DB
-                await axios.post('http://localhost:3000/users', {
+                await axiosInstance.post('/users', {
                     name: loggedUser.displayName,
                     email: loggedUser.email,
                     photo: loggedUser.photoURL,
@@ -52,6 +58,7 @@ const LogIn = () => {
                 });
 
                 Swal.fire('Welcome!', 'Logged in with Google!', 'success');
+                navigate(from, { replace: true });
             } catch (err) {
                 Swal.fire('Error!', err.message, 'error');
             }

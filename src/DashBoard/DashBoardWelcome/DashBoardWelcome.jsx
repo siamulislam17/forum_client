@@ -10,10 +10,10 @@ const DashboardHome = () => {
       
       <Typewriter
         words={[
-          'Manage Your Deliveries Effortlessly ',
-          'Assign Riders with One Click ',
-          'Track and Monitor Parcels in Real-Time',
-          'Grow Your Business with Us ',
+          'See Your Profile and Posts',
+          'Add post',
+          'Report Comments',
+          'Grow with Us',
         ]}
         loop={5}
         cursor
