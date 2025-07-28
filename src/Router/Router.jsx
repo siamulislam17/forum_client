@@ -54,7 +54,7 @@ export const router = createBrowserRouter([
             element: <PrivateRoute>
                 <Announcements></Announcements>
             </PrivateRoute>
-        },
+        }
       
     ],
   },

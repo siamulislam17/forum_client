@@ -191,7 +191,7 @@ const Navbar = () => {
           {user && (
             <>
               <div className={`font-semibold ${textColorClass}`}>{user.displayName || 'User'}</div>
-              <Link to="/dashboard" className={`block hover:text-blue-500 ${textColorClass}`}>Dashboard</Link>
+              <Link to="/dashboard/welcome" className={`block hover:text-blue-500 ${textColorClass}`}>Dashboard</Link>
               <button onClick={handleLogout} className={`w-full text-left hover:text-red-500 ${textColorClass}`}>
                 Logout
               </button>

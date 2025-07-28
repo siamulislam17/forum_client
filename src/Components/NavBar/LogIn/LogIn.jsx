@@ -8,7 +8,7 @@ import UseAsios from '../../../UrlInstance/UseURL';
 
 
 const LogIn = () => {
-    const { SignIn, GoogleLogIn, toggleDarkMode, user } = useContext(AuthContext);
+    const { SignIn, GoogleLogIn, toggleDarkMode } = useContext(AuthContext);
     const [showPassword, setShowPassword] = useState(false);
     const axiosInstance = UseAsios();
     

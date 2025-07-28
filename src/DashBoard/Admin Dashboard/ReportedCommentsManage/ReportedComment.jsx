@@ -101,7 +101,7 @@ const ReportedActivities = () => {
   };
 
   // Delete content AND all reports related to it
-const handleDeleteContent = async (contentId) => {
+const handleDeleteContent = async (contentId, reportIdToDismiss) => {
   if (!contentId) {
     Swal.fire('Error', 'No content ID provided', 'error');
     return;
@@ -119,7 +119,7 @@ const handleDeleteContent = async (contentId) => {
   if (result.isConfirmed) {
     try {
       const deleteRes = await axiosSecure.delete(`/content/${contentId}`);
-      handleDismiss(contentId); // Dismiss all reports related to this content
+      await axiosSecure.delete(`/reports/${reportIdToDismiss}`);
 
       if (
         deleteRes.data.deletedCount > 0 ||
@@ -137,6 +137,7 @@ const handleDeleteContent = async (contentId) => {
     }
   }
 };
+
 
 
   if (isLoading) return (
@@ -240,7 +241,10 @@ const handleDeleteContent = async (contentId) => {
                         Dismiss
                       </button>
                       <button
-                            onClick={() => handleDeleteContent(report.commentId || report.postId)}
+                            onClick={() => handleDeleteContent(
+                                  report.commentId || report.postId,
+                                  report._id
+                                )}
                             className={`btn btn-sm btn-outline btn-error ${(!report.commentId && !report.postId) ? 'btn-disabled' : ''}`}
                             title={(!report.commentId && !report.postId) ? 'No content available' : 'Delete Content'}
                             disabled={!report.commentId && !report.postId}
