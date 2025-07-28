@@ -1,12 +1,78 @@
-# React + Vite
+# 📢 ForumNest – Client Side
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+🔗 **Live Site**: [https://forumnest-9712e.web.app/dashboard/welcome](https://forumnest-9712e.web.app/dashboard/welcome)
 
-Currently, two official plugins are available:
+ForumNest is a modern forum website built using the **MERN stack**. It supports user authentication, post and comment interaction, admin dashboard, Stripe-based membership, and more.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React.js (Vite)
+- **Backend**: Express.js + MongoDB
+- **Authentication**: Firebase Authentication
+- **Authorization**: JWT with Firebase Admin SDK
+- **Database**: MongoDB Atlas
+- **Payment Gateway**: Stripe
+
+---
+
+## 🧩 Features
+
+### 🧑‍💻 General Users
+- Register and login (email/password or Google)
+- Create, read, upvote/downvote posts
+- Comment on posts
+- Report inappropriate comments
+- View latest announcements
+- Dark mode / light mode toggle
+- Purchase membership via Stripe
+
+### 🛠️ Admin Panel
+- Manage users (add/remove admin roles)
+- See pending/active riders (if used for parcel context)
+- Publish announcements
+- Monitor reported comments
+- View dashboard summary
+
+---
+
+## 📦 NPM Packages Used
+
+### 🔧 Core
+- `react`, `react-dom`
+- `react-router-dom`
+- `axios`
+- `firebase`
+- `jsonwebtoken`
+
+### 🎨 UI & Styling
+- `tailwindcss`
+- `daisyui`
+- `clsx`
+- `react-icons`
+- `sweetalert2`
+- `moment`
+
+### 🔄 State & Server
+- `@tanstack/react-query` – for async data fetching and caching
+
+### 💳 Payments
+- `@stripe/react-stripe-js`
+- `@stripe/stripe-js`
+
+---
+
+## 🔐 Auth & Security
+
+- Firebase Authentication handles login and token issuance.
+- JWT tokens are generated on the server using Firebase Admin SDK.
+- Tokens are stored in localStorage and sent with secure Axios requests.
+- Protected routes are implemented for both user and admin access.
+
+---
+
+## 🌱 .env Setup (Client)
+
+Create a `.env` file in the root:
+

@@ -20,7 +20,7 @@ const DashboardHome = () => {
         cursorStyle='_'
         typeSpeed={70}
         deleteSpeed={50}
-        delaySpeed={700}
+        delaySpeed={700} 
       />
     </div>
   );

@@ -3,7 +3,7 @@ import React from 'react';
 
 const UseAsios = () => {
     const axiosInstance = axios.create({
-        baseURL: 'http://localhost:3000/',
+        baseURL: 'https://forum-server-three.vercel.app/',
 
 });
     return (

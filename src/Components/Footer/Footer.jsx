@@ -15,7 +15,7 @@ const Footer = () => {
           <img src={Logo} alt="Logo" className="h-10 mb-3" />
           <p className="leading-relaxed">
             Welcome to the community of Forum Nest where innovation meets collaboration.
-          </p>
+          </p> 
         </div>
 
         {/* Navigation */}
