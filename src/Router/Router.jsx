@@ -19,6 +19,7 @@ import ReportedActivities from "../DashBoard/Admin Dashboard/ReportedCommentsMan
 import MakeAnnouncement from "../DashBoard/Admin Dashboard/CreateAnnouncement/CreateAnnouncement";
 import AdminProfile from "../DashBoard/Admin Dashboard/AdminProfile/AdminProfile";
 import Announcements from "../Pages/Announcements/Announcements";
+import DashboardHome from "../DashBoard/DashBoardWelcome/DashBoardWelcome";
 
 export const router = createBrowserRouter([
   {
@@ -53,7 +54,8 @@ export const router = createBrowserRouter([
             element: <PrivateRoute>
                 <Announcements></Announcements>
             </PrivateRoute>
-        }
+        },
+      
     ],
   },
   {
@@ -91,6 +93,10 @@ export const router = createBrowserRouter([
         {
             path: 'admin-profile',
             element: <AdminProfile></AdminProfile>
+        },
+        {
+            path: 'welcome',
+            element:<DashboardHome></DashboardHome>
         }
     ]
   }

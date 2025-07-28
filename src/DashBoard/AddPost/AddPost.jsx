@@ -1,14 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Select from 'react-select';
 import Swal from 'sweetalert2';
-
-
-
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../Context/AuthContext';
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
 import { useQuery } from '@tanstack/react-query';
-
 
 const AddPost = () => {
   const { user, toggleDarkMode } = useContext(AuthContext);
@@ -41,17 +37,14 @@ const AddPost = () => {
       if (!user?.email) return;
 
       try {
-        // Fetch user info with membership status
         const userRes = await axiosSecure.get(`/users?email=${user.email}`);
-        const currentUser = userRes.data?.[0]; // assuming array with one user
+        const currentUser = userRes.data?.[0];
         setUserInfo(currentUser);
 
-        // Fetch posts count by user email
         const postsRes = await axiosSecure.get(`/posts?email=${user.email}`);
         const count = postsRes.data?.length || 0;
         setPostCount(count);
 
-        // Show warning if non-member has 4 posts
         if (currentUser?.membership === false && count === 4) {
           Swal.fire({
             icon: 'info',
@@ -115,13 +108,12 @@ const AddPost = () => {
     }
   };
 
-  // Tailwind classes for conditional mode
-  const inputBase = 'w-full rounded-md px-4 py-2 border shadow-sm placeholder-opacity-75';
-  const darkInput = 'bg-gray-900 text-white border-gray-700 placeholder-gray-400';
-  const lightInput = 'bg-white text-black border-gray-300 placeholder-gray-600';
+  const inputBase = 'w-full rounded-lg px-4 py-2 border shadow-sm focus:outline-none focus:ring-2';
+  const darkInput = 'bg-gray-900 text-white border-gray-700 placeholder-gray-500 focus:ring-blue-500';
+  const lightInput = 'bg-white text-black border-gray-300 placeholder-gray-600 focus:ring-blue-500';
 
   const inputClass = `${inputBase} ${toggleDarkMode ? darkInput : lightInput}`;
-  const textareaClass = `${inputBase} resize-none h-32 ${toggleDarkMode ? darkInput : lightInput}`;
+  const textareaClass = `${inputClass} resize-none h-32`;
 
   const customSelectStyles = {
     control: (base, state) => ({
@@ -146,17 +138,16 @@ const AddPost = () => {
     }),
   };
 
-  if (isLoading) return <div className="text-center">Loading...</div>;
+  if (isLoading) return <div className="text-center text-lg py-10">Loading...</div>;
 
-  // Block post UI for non-members who reached limit
   if (userInfo?.membership === false && postCount >= 5) {
     return (
-      <div className={`max-w-4xl mx-auto p-6 rounded-xl shadow-lg text-center ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
+      <div className={`max-w-3xl mx-auto p-8 rounded-2xl shadow-lg text-center ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'}`}>
         <h2 className="text-3xl font-bold mb-4">Post Limit Reached</h2>
         <p className="mb-6">You've reached the post limit for non-members.</p>
         <button
           onClick={() => navigate('/membership')}
-          className="btn btn-primary rounded-md"
+          className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
         >
           Become a Member
         </button>
@@ -165,12 +156,12 @@ const AddPost = () => {
   }
 
   return (
-    <div className={`max-w-4xl mx-auto p-6 rounded-xl shadow-lg transition duration-300 ${toggleDarkMode ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-80 text-white'}`}>
-      <h2 className="text-3xl font-bold mb-6 text-center">Add New Post</h2>
+    <div className={`max-w-4xl mx-auto p-8 rounded-2xl shadow-xl transition duration-300 ${toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-black'}`}>
+      <h2 className="text-4xl font-bold mb-8 text-center">Add New Post</h2>
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Title */}
         <div>
-          <label className="block mb-2 font-medium">Title</label>
+          <label className="block mb-2 font-semibold">Title</label>
           <input
             type="text"
             name="title"
@@ -184,13 +175,12 @@ const AddPost = () => {
 
         {/* Tags */}
         <div>
-          <label className="block mb-2 font-medium">Tags</label>
+          <label className="block mb-2 font-semibold">Tags</label>
           <Select
             isMulti
             options={tagsData}
             onChange={handleTagChange}
             value={tagsData.filter((tag) => formData.tags.includes(tag.value))}
-
             styles={customSelectStyles}
             placeholder="Select tags"
             classNamePrefix="react-select"
@@ -199,7 +189,7 @@ const AddPost = () => {
 
         {/* Content */}
         <div>
-          <label className="block mb-2 font-medium">Content</label>
+          <label className="block mb-2 font-semibold">Content</label>
           <textarea
             name="content"
             value={formData.content}
@@ -210,9 +200,9 @@ const AddPost = () => {
           />
         </div>
 
-        {/* Author Image + Preview */}
+        {/* Author Image */}
         <div>
-          <label className="block mb-2 font-medium">Author Image URL</label>
+          <label className="block mb-2 font-semibold">Author Image URL</label>
           <input
             type="text"
             name="authorImage"
@@ -226,14 +216,17 @@ const AddPost = () => {
             <img
               src={formData.authorImage}
               alt="Author"
-              className="mt-3 w-20 h-20 rounded-full object-cover border shadow"
+              className="mt-4 w-20 h-20 rounded-full object-cover border-2 border-blue-500 shadow-md"
             />
           )}
         </div>
 
-        {/* Submit */}
+        {/* Submit Button */}
         <div>
-          <button type="submit" className="btn btn-primary w-full rounded-md">
+          <button
+            type="submit"
+            className="w-full py-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition"
+          >
             Post
           </button>
         </div>

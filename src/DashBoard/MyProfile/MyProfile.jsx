@@ -40,7 +40,7 @@ const MyProfile = () => {
           : 'bg-gradient-to-br from-blue-100 via-pink-100 to-yellow-100 text-gray-900'
       }`}
     >
-      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8">
+      <div className={`max-w-3xl mx-auto  rounded-2xl shadow-lg p-6 md:p-8 ${toggleDarkMode ? 'bg-gray-800' : 'bg-white'}`}>
         <div className="flex items-center gap-6 mb-6">
           <img
             src={user?.photoURL}

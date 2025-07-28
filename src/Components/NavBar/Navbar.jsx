@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, } from 'react';
 import { Link } from 'react-router';
 import { Bell, Menu, Sun, Moon } from 'lucide-react';
 import Logo from '../../assets/Logo.png';
@@ -112,7 +112,7 @@ const Navbar = () => {
                 <div className="px-4 py-3 border-b dark:border-gray-600 font-semibold text-sm">
                   {user.displayName || 'User'}
                 </div>
-                <Link to="/dashboard" className="block px-4 py-2 text-sm hover:bg-blue-200 dark:hover:bg-gray-700 transition-colors">
+                <Link to="/dashboard/welcome" className="block px-4 py-2 text-sm hover:bg-blue-200 dark:hover:bg-gray-700 transition-colors">
                   Dashboard
                 </Link>
                 <button
@@ -148,7 +148,36 @@ const Navbar = () => {
         }`}>
           <Link to="/" className={`block hover:text-blue-500 ${textColorClass}`}>Home</Link>
           <Link to="/membership" className={`block hover:text-blue-500 ${textColorClass}`}>Membership</Link>
-          <Bell className={`cursor-pointer ${textColorClass}`} />
+          {/* Notification bell with badge and dropdown */}
+        <div className="relative">
+          <Bell onClick={() => setShowNotifDropdown(!showNotifDropdown)} className="cursor-pointer" />
+          {announcements.length > 0 && (
+            <span className="absolute -top-2 -left-0.5  bg-red-600 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+              {announcements.length}
+            </span>
+          )}
+          {showNotifDropdown && announcements.length > 0 && (
+            <div className={`absolute right-0 mt-2 w-80 rounded-xl shadow-lg z-50 p-4 space-y-3 ${
+              toggleDarkMode
+                ? 'bg-gray-800 text-white border border-gray-700'
+                : 'bg-white text-black border border-gray-200'
+            }`}>
+              <h4 className="font-semibold text-sm mb-2">Announcements</h4>
+              <ul className="space-y-2 max-h-60 overflow-y-auto">
+                {announcements.slice(0, 4).map(a => (
+                  <li key={a._id} className="text-sm border-b pb-2 last:border-none">
+                    <p className="font-medium">{a.title}</p>
+                    <p className="text-xs opacity-70">{new Date(a.date).toLocaleString()}</p>
+                  </li>
+                ))}
+              </ul>
+              <Link to="/announcements" className="block text-blue-500 text-sm hover:underline text-right">
+                View All
+              </Link>
+            </div>
+          )}
+        </div>
+
 
           {!user && (
             <Link

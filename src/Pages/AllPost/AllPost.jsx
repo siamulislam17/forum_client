@@ -97,7 +97,7 @@ const AllPost = () => {
                 <li
                   onClick={() => goToPostDetails(post._id)}
                   key={post._id}
-                  className={`cursor-pointer border rounded-xl p-6 shadow hover:shadow-xl transform hover:scale-[1.01] transition-all ${
+                  className={`cursor-pointer border border-gray-300 shadow-lg rounded-xl p-6  hover:shadow-xl transform hover:scale-[1.01] transition-all ${
                     toggleDarkMode ? 'bg-gray-800' : 'bg-white'
                   }`}
                 >
