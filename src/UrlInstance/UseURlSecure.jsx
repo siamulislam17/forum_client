@@ -5,7 +5,7 @@ import { AuthContext } from '../Context/AuthContext';
 
 
 const axiosInstance = axios.create({
-  baseURL: 'https://forum-server-three.vercel.app/',
+  baseURL: 'https://forum-server-3kblv06aj-siam-ul-islams-projects.vercel.app/',
 });
 
 const UseAxiosSecure = () => {
