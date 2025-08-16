@@ -1,6 +1,6 @@
 # 📢 ForumNest – Client Side
 
-🔗 **Live Site**: [https://forumnest-9712e.web.app/dashboard/welcome](https://forumnest-9712e.web.app/dashboard/welcome)
+🔗 **Live Site**: [https://forumnest-9712e.web.app/](https://forumnest-9712e.web.app/))
 
 ForumNest is a modern forum website built using the **MERN stack**. It supports user authentication, post and comment interaction, admin dashboard, Stripe-based membership, and more.
 

@@ -63,7 +63,7 @@ const PostDetail = () => {
     setCommentText('');
   };
 
-  if (isLoading) return <p className="text-center py-10">Loading...</p>;
+  if (isLoading) return <span className="loading loading-bars text-4xl mx-auto flex justify-center items-center h-screen "></span>;
   if (error) return <p className="text-center py-10 text-red-600">Error loading post.</p>;
   if (!post) return <p className="text-center py-10">Post not found.</p>;
 
@@ -165,7 +165,7 @@ const PostDetail = () => {
               <button
                 onClick={handleCommentSubmit}
                 disabled={commentMutation.isLoading}
-                className="mt-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded text-white disabled:opacity-50"
+                className="px-5 py-2 rounded-sm mt-4 bg-purple-500 text-white hover:bg-purple-600 transition disabled:opacity-40"
               >
                 Comment
               </button>
