@@ -14,13 +14,13 @@ const Tags = () => {
     },
   });
 
-  if (isLoading) return <div className="text-center py-10">Loading...</div>;
+  if (isLoading) return <div className="text-center py-10"><span className='loading '></span></div>;
   if (isError) return <div className="text-center py-10 text-red-500">Failed to load tags</div>;
 
   return (
     <div
-      className={`py-10 px-4 md:px-8 lg:px-16 transition duration-300 ease-in-out ${
-        toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
+      className={`py-10 pt-30 px-4 md:px-8 lg:px-16 transition duration-300 ease-in-out ${
+        toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-800'
       }`}
     >
       <h2 className="text-3xl font-bold text-center mb-6">Explore Tags</h2>

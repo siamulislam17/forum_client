@@ -40,7 +40,7 @@ const Banner = () => {
 
   return (
     <div
-      className={`px-6 pt-20 py-10 transition-all duration-300 ${
+      className={`px-6 pt-30 py-10 md:h-screen transition-all duration-300 ${
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
       }`}
     >
