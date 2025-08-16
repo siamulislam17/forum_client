@@ -20,6 +20,7 @@ import MakeAnnouncement from "../DashBoard/Admin Dashboard/CreateAnnouncement/Cr
 import AdminProfile from "../DashBoard/Admin Dashboard/AdminProfile/AdminProfile";
 import Announcements from "../Pages/Announcements/Announcements";
 import DashboardHome from "../DashBoard/DashBoardWelcome/DashBoardWelcome";
+import ErrorPage from "../Components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -99,5 +100,9 @@ export const router = createBrowserRouter([
             element:<DashboardHome></DashboardHome>
         }
     ]
+  },
+  {
+    path: '*',
+    element: <ErrorPage />
   }
 ]);
