@@ -21,6 +21,8 @@ import AdminProfile from "../DashBoard/Admin Dashboard/AdminProfile/AdminProfile
 import Announcements from "../Pages/Announcements/Announcements";
 import DashboardHome from "../DashBoard/DashBoardWelcome/DashBoardWelcome";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
+import Terms from "../Pages/Terms/Terms";
+import Blogs from "../Pages/Blogs/Blogs";
 
 export const router = createBrowserRouter([
   {
@@ -55,8 +57,15 @@ export const router = createBrowserRouter([
             element: <PrivateRoute>
                 <Announcements></Announcements>
             </PrivateRoute>
+        },
+        {
+            path: '/terms',
+            element: <Terms></Terms>
+        },
+        {
+            path: '/blogs',
+            element: <Blogs></Blogs>
         }
-      
     ],
   },
   {

@@ -4,6 +4,7 @@ import Banner from '../Pages/Banner/Banner';
 import Tags from '../Pages/Tsgs/Tags';
 import PostsList from '../Pages/AllPost/AllPost';
 import Announcements from '../Pages/Announcements/Announcements';
+import AboutSection from '../Pages/About/About';
 
 
 
@@ -14,6 +15,7 @@ const HomePage = () => {
             <Tags></Tags>
             <Announcements></Announcements>
             <PostsList></PostsList>
+            <AboutSection></AboutSection>
         </div>
     );
 };

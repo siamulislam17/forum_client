@@ -32,7 +32,8 @@
     "react-simple-typewriter": "^5.0.1",
     "recharts": "^3.1.0",
     "sweetalert2": "^11.22.2",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "use-sound": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

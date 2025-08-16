@@ -135,7 +135,7 @@ const AllPost = () => {
                         )}
                         <span>{dayjs(post.date).fromNow()}</span>
                       </div>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+                      <p className={`text-sm ${toggleDarkMode ? 'text-gray-300' : 'text-gray-600'} line-clamp-3`}>
                         {post.content || 'No description'}
                       </p>
                     </div>

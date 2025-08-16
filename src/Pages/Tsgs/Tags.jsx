@@ -23,7 +23,7 @@ const Tags = () => {
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-800'
       }`}
     >
-      <h2 className="text-3xl font-bold text-center mb-6">Explore Tags</h2>
+      <h2 className="text-3xl bg-clip-text text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600  text-transparent font-bold text-center mb-6">Explore Tags</h2>
 
       <div className="flex flex-wrap justify-center gap-4">
         {tags.map((tag, idx) => (

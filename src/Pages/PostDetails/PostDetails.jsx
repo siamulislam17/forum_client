@@ -2,13 +2,14 @@ import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import useSound from 'use-sound';
 
 import { FacebookShareButton, FacebookIcon, TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon } from 'react-share';
 import { AuthContext } from '../../Context/AuthContext';
 
 import UseAxiosSecure from '../../UrlInstance/UseURlSecure';
 import { X } from 'lucide-react';
-import { FaThumbsDown, FaThumbsUp } from 'react-icons/fa';
+import { FaThumbsDown, FaThumbsUp, FaRegComment, FaShare } from 'react-icons/fa';
 
 const PostDetail = () => {
   const { id } = useParams();
@@ -16,6 +17,12 @@ const PostDetail = () => {
   const { user, toggleDarkMode } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
   const queryClient = useQueryClient();
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  //  Load sounds from internet (replace with your links if needed)
+  const [playLike] = useSound("https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3", { volume: 0.5 });
+  const [playDislike] = useSound("https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3", { volume: 0.5 });
+  const [playComment] = useSound("https://assets.mixkit.co/sfx/preview/mixkit-fast-small-sweep-transition-166.mp3", { volume: 0.5 });
 
   // Fetch post detail
   const {
@@ -25,31 +32,42 @@ const PostDetail = () => {
   } = useQuery({
     queryKey: ['post', postId],
     queryFn: () => axiosSecure.get(`/posts/${postId}`).then(res => res.data),
-    enabled: !!postId, // ensure postId exists before running query
+    enabled: !!postId,
   });
 
   // Upvote mutation
   const upvoteMutation = useMutation({
     mutationFn: () => axiosSecure.post(`/posts/${postId}/upvote`),
-    onSuccess: () => queryClient.invalidateQueries(['post', postId]),
+    onSuccess: () => {
+      playLike(); // 🔊 play sound
+      queryClient.invalidateQueries(['post', postId]);
+      
+    },
   });
 
   // Downvote mutation
   const downvoteMutation = useMutation({
     mutationFn: () => axiosSecure.post(`/posts/${postId}/downvote`),
-    onSuccess: () => queryClient.invalidateQueries(['post', postId]),
+    onSuccess: () => {
+          playDislike(); // 🔊 play sound
+      queryClient.invalidateQueries(['post', postId]);
+  
+    },
   });
 
   // Comment mutation
   const commentMutation = useMutation({
     mutationFn: (commentText) =>
       axiosSecure.post(`/posts/${postId}/comments`, { text: commentText }),
-    onSuccess: () => queryClient.invalidateQueries(['post', postId]),
+    onSuccess: () => {
+       playComment(); // 🔊 play sound
+      queryClient.invalidateQueries(['post', postId]);
+     
+    },
   });
 
   const [commentText, setCommentText] = useState('');
 
-  // Submit comment handler
   const handleCommentSubmit = () => {
     if (!user) {
       alert('Please login to comment.');
@@ -69,115 +87,217 @@ const PostDetail = () => {
 
   return (
     <div
-      className={`min-h-screen pt-25 px-6 py-8 transition-colors duration-500 ${
-        toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-white text-gray-900'
+      className={`min-h-screen pt-25 px-4 py-8 transition-colors duration-500 ${
+        toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'
       }`}
     >
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
         {/* Post Header */}
-        <div className="flex items-center gap-4">
-          <img
-            src={post.authorImage || '/default-profile.png'}
-            alt={post.author || 'Author'}
-            className="w-16 h-16 rounded-full object-cover"
-          />
-          <div>
-            <h1 className="text-3xl font-bold">{post.title}</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              by {post.author} • {dayjs(post.date).fromNow()}
-            </p>
-            <p className="mt-1 text-sm italic">Tags: {post.tags?.join(', ') || 'No tags'}</p>
+        <div className="p-4">
+          <div className="flex items-center gap-3">
+            <img
+              src={post.authorImage || '/default-profile.png'}
+              alt={post.author || 'Author'}
+              className="w-10 h-10 rounded-full object-cover"
+            />
+            <div>
+              <h2 className="font-semibold">{post.author}</h2>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {dayjs(post.date).fromNow()}
+              </p>
+            </div>
           </div>
+          
+          <h1 className="text-xl font-bold mt-3">{post.title}</h1>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            Tags: {post.tags?.join(', ') || 'No tags'}
+          </p>
         </div>
 
         {/* Post Content */}
-        <div className="prose dark:prose-invert max-w-none">{post.content}</div>
+        <div className="px-4 pb-4">
+          <div className="prose dark:prose-invert max-w-none">{post.content}</div>
+        </div>
 
-        {/* Actions: Upvote / Downvote / Share */}
-        <div className="flex items-center gap-6">
+        {/* Post Stats */}
+        <div className="px-4 py-2 border-t border-b border-gray-200 dark:border-gray-700 flex justify-between text-sm text-gray-500 dark:text-gray-400">
+          <div>
+            <span>{post.upVote || 0} likes</span>
+            {post.downVote > 0 && <span className="ml-2">{post.downVote} dislikes</span>}
+          </div>
+          <div>
+            <span>{post.comments?.length || 0} comments</span>
+          </div>
+        </div>
+
+        {/* Post Actions */}
+        <div className="px-4 py-2 flex justify-between border-b border-gray-200 dark:border-gray-700">
           <button
             onClick={() => upvoteMutation.mutate()}
             disabled={upvoteMutation.isLoading}
-            className="flex items-center gap-2 px-4 rounded-2xl py-1.5 bg-green-600 hover:bg-green-700 disabled:opacity-50 text-white"
-            aria-label="Upvote Post"
-        >
-            <FaThumbsUp /> ({post.upVote || 0})
-        </button>
-
-        <button
+            className={`flex items-center justify-center gap-1 w-full py-2 rounded-md ${
+              toggleDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+            }`}
+          >
+            <FaThumbsUp className="text-blue-500" />
+            <span>Like</span>
+          </button>
+          
+          <button
             onClick={() => downvoteMutation.mutate()}
             disabled={downvoteMutation.isLoading}
-            className="flex items-center gap-2 px-4 rounded-2xl py-1.5 bg-red-500 hover:bg-red-700 disabled:opacity-50 text-white"
-            aria-label="Downvote Post"
-        >
-            <FaThumbsDown /> ({post.downVote || 0})
-        </button>
-
-
-          <FacebookShareButton url={window.location.href} quote={post.title}>
-            <FacebookIcon size={36} round />
-          </FacebookShareButton>
-
-          <TwitterShareButton url={window.location.href} quote={post.title}>
-            <TwitterIcon size={36} round />
-          </TwitterShareButton>
-
-          <LinkedinShareButton url={window.location.href} quote={post.title}>
-            <LinkedinIcon size={36} round />
-          </LinkedinShareButton>
+            className={`flex items-center justify-center gap-1 w-full py-2 rounded-md ${
+              toggleDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+            }`}
+          >
+            <FaThumbsDown className="text-red-500" />
+            <span>Dislike</span>
+          </button>
+          
+          
+          
+          <button 
+            onClick={() => setShowShareModal(true)}
+            className={`flex items-center justify-center gap-1 w-full py-2 rounded-md ${
+              toggleDarkMode ? 'hover:bg-gray-700' : 'hover:bg-gray-100'
+            }`}
+          >
+            <FaShare />
+            <span>Share</span>
+          </button>
         </div>
 
         {/* Comments Section */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Comments</h2>
-
-          {post.comments && post.comments.length > 0 ? (
-            <ul className="space-y-4">
-              {post.comments.map((c) => (
-                <li
-                  key={c._id}
-                  className={`p-4 rounded ${toggleDarkMode ? 'bg-gray-800' : 'bg-gray-100'}`}
-                >
-                  <p className="font-semibold">{c.author || 'Anonymous'}</p>
-                  <p>{c.text}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No comments yet.</p>
-          )}
-
-          {/* Add Comment */}
+        <div className="p-4">
           {user ? (
-            <div className="mt-6">
-              <textarea
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-                placeholder="Write your comment..."
-                className={`w-full p-3 rounded border ${
-                  toggleDarkMode
-                    ? 'border-gray-600 bg-gray-700 text-white'
-                    : 'border-gray-300 bg-white text-gray-900'
-                }`}
-                rows={4}
-                aria-label="Write your comment"
+            <div className="flex gap-2 mb-4">
+              <img
+                src={user.photoURL || '/default-profile.png'}
+                alt={user.displayName || 'User'}
+                className="w-8 h-8 rounded-full object-cover"
               />
-              <button
-                onClick={handleCommentSubmit}
-                disabled={commentMutation.isLoading}
-                className="px-5 py-2 rounded-sm mt-4 bg-purple-500 text-white hover:bg-purple-600 transition disabled:opacity-40"
-              >
-                Comment
-              </button>
+              <div className="flex-1">
+                <textarea
+                  value={commentText}
+                  onChange={(e) => setCommentText(e.target.value)}
+                  placeholder="Write a comment..."
+                  className={`w-full p-2 rounded-full border ${
+                    toggleDarkMode
+                      ? 'border-gray-600 bg-gray-700 text-white'
+                      : 'border-gray-300 bg-gray-100 text-gray-900'
+                  }`}
+                  rows={1}
+                  aria-label="Write your comment"
+                />
+                <div className="flex justify-end mt-2">
+                  <button
+                    onClick={handleCommentSubmit}
+                    disabled={commentMutation.isLoading}
+                    className="px-4 py-1 rounded-full text-white bg-gradient-to-r from-fuchsia-600 to-purple-600  font-semibold disabled:opacity-40 text-sm"
+                  >
+                    Post
+                  </button>
+                </div>
+              </div>
             </div>
           ) : (
-            <p className="mt-6 text-gray-500">Please log in to comment.</p>
+            <p className="text-sm text-gray-500 mb-4">Please log in to comment.</p>
+          )}
+
+          {post.comments && post.comments.length > 0 ? (
+            <div className="space-y-3">
+              {post.comments.map((c) => (
+                <div key={c._id} className="flex gap-2">
+                  <img
+                    src={c.authorImage || '/default-profile.png'}
+                    alt={c.author || 'Author'}
+                    className="w-8 h-8 rounded-full object-cover"
+                  />
+                  <div className={`flex-1 p-2 rounded-lg ${
+                    toggleDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                  }`}>
+                    <p className="font-semibold text-sm">{c.author || 'Anonymous'}</p>
+                    <p className="text-sm">{c.text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-500">No comments yet.</p>
           )}
         </div>
       </div>
 
-
- 
+      {/* Share Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className={`relative p-6 rounded-lg shadow-lg max-w-sm w-full ${
+            toggleDarkMode ? 'bg-gray-800' : 'bg-white'
+          }`}>
+            <button 
+              onClick={() => setShowShareModal(false)}
+              className="absolute top-2 right-2 p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+            >
+              <X size={20} />
+            </button>
+            
+            <h3 className="text-lg font-semibold mb-4">Share this post</h3>
+            
+            <div className="flex justify-center gap-4">
+              <FacebookShareButton 
+                url={window.location.href} 
+                quote={post.title}
+                onClick={() => setShowShareModal(false)}
+                className="outline-none"
+              >
+                <FacebookIcon size={40} round />
+              </FacebookShareButton>
+              
+              <TwitterShareButton 
+                url={window.location.href} 
+                title={post.title}
+                onClick={() => setShowShareModal(false)}
+                className="outline-none"
+              >
+                <TwitterIcon size={40} round />
+              </TwitterShareButton>
+              
+              <LinkedinShareButton 
+                url={window.location.href} 
+                title={post.title}
+                onClick={() => setShowShareModal(false)}
+                className="outline-none"
+              >
+                <LinkedinIcon size={40} round />
+              </LinkedinShareButton>
+            </div>
+            
+            <div className="mt-4">
+              <div className={`flex items-center p-2 rounded-lg ${
+                toggleDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+              }`}>
+                <input 
+                  type="text" 
+                  value={window.location.href}
+                  readOnly
+                  className={`flex-1 bg-transparent outline-none text-sm ${
+                    toggleDarkMode ? 'text-white' : 'text-gray-900'
+                  }`}
+                />
+                <button 
+                  onClick={() => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                  }}
+                  className="text-blue-500 text-sm font-medium px-2"
+                >
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
