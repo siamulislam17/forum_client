@@ -23,6 +23,7 @@ import DashboardHome from "../DashBoard/DashBoardWelcome/DashBoardWelcome";
 import ErrorPage from "../Components/ErrorPage/ErrorPage";
 import Terms from "../Pages/Terms/Terms";
 import Blogs from "../Pages/Blogs/Blogs";
+import ContactUsGoogleForm from "../Pages/ContackUs/ContackUs";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +66,10 @@ export const router = createBrowserRouter([
         {
             path: '/blogs',
             element: <Blogs></Blogs>
+        },
+        {
+            path: '/contact-google-form',
+            element: <ContactUsGoogleForm></ContactUsGoogleForm>
         }
     ],
   },

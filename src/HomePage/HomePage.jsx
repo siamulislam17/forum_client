@@ -5,6 +5,7 @@ import Tags from '../Pages/Tsgs/Tags';
 import PostsList from '../Pages/AllPost/AllPost';
 import Announcements from '../Pages/Announcements/Announcements';
 import AboutSection from '../Pages/About/About';
+import ContactSection from '../Pages/ContackHomePage/ContackHomePage';
 
 
 
@@ -16,6 +17,7 @@ const HomePage = () => {
             <Announcements></Announcements>
             <PostsList></PostsList>
             <AboutSection></AboutSection>
+            <ContactSection></ContactSection>
         </div>
     );
 };

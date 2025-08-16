@@ -16,23 +16,32 @@ const Blogs = () => {
 
   // Example blog posts
   const blogPosts = [
-    {
-      title: 'How to Build a Social Forum',
-      content: 'Creating a social forum requires a backend, frontend, authentication, posts, comments, and much more. Using React and Tailwind can simplify frontend development.'
-    },
-    {
-      title: 'Understanding React Query',
-      content: 'React Query helps in managing server state in React applications. It simplifies data fetching, caching, and updating your UI efficiently.'
-    },
-    {
-      title: 'Dark Mode Implementation',
-      content: 'Dark mode enhances user experience in low-light environments. You can toggle dark mode using React context and Tailwind CSS classes.'
-    },
-    {
-      title: 'Adding Animations in React',
-      content: 'Framer Motion and CSS transitions allow smooth animations for elements. Animations make your app look modern and interactive.'
-    }
-  ];
+  {
+    title: 'Building a Social Forum from Scratch',
+    content: 'Creating a social forum involves designing a database for posts, users, and comments, setting up authentication, and building a frontend with interactive features like voting, sharing, and commenting.'
+  },
+  {
+    title: 'Optimizing User Engagement in Forums',
+    content: 'To keep users engaged, implement features like upvotes/downvotes, trending posts, notifications, badges, and personalized content. A smooth and responsive UI is key to retention.'
+  },
+  {
+    title: 'Implementing Dark Mode and Accessibility',
+    content: 'Dark mode and accessibility improvements make your forum usable for a wider audience. Use Tailwind CSS for theme toggling and semantic HTML for screen readers.'
+  },
+  {
+    title: 'Handling Real-Time Updates in a Forum',
+    content: 'Integrate real-time updates for posts, comments, and notifications using WebSockets or libraries like Pusher or Firebase to make your forum interactive and lively.'
+  },
+  {
+    title: 'Moderation and Community Management',
+    content: 'Moderation features like reporting posts, admin roles, and comment approval help maintain a safe community. Implementing clear rules and admin dashboards is essential.'
+  },
+  {
+    title: 'Performance and Scalability Tips',
+    content: 'For large forums, use pagination, caching, and optimized database queries. Tools like React Query, MongoDB indexing, and lazy loading can greatly improve performance.'
+  }
+];
+
 
   return (
     <div className={`${containerBg} min-h-screen px-6 py-16 transition-all duration-500`}>
@@ -49,7 +58,7 @@ const Blogs = () => {
         <div className="space-y-4">
           {blogPosts.map((blog, idx) => (
             <div key={idx} className={`${sectionBg} p-4 rounded-xl shadow-md transition-all duration-300`}>
-              <div tabIndex={0} className="collapse collapse-arrow border border-gray-200 dark:border-gray-700 rounded-box">
+              <div tabIndex={0} className="collapse collapse-arrow border border-none rounded-box">
                 <input type="checkbox" />
                 <div className="collapse-title text-xl font-semibold text-purple-600 dark:text-purple-400">
                   {blog.title}
