@@ -241,7 +241,9 @@ const Navbar = () => {
       {/* Mobile Drawer */}
       {drawerOpen && (
         <div
-          className={`md:hidden px-4 py-3 space-y-2 ${bgClass} ${textColorClass} border-t ${borderClass}`}
+          className={`md:hidden px-4 py-3 space-y-2 border-t transition-transform duration-300 ease-out
+          ${drawerOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0'} 
+          ${bgClass} ${textColorClass} ${borderClass}`}
         >
           {finalRoutes.map((route) => (
             <Link

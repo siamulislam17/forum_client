@@ -41,7 +41,7 @@ const Banner = () => {
   return (
     <div
       className={`px-6 pt-30 py-10 md:h-screen transition-all duration-300 ${
-        toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
+        toggleDarkMode ? 'bg-gray-900 text-white' : ' bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-800'
       }`}
     >
       <div className="grid max-w-[1600px] mx-auto md:grid-cols-2 items-center gap-10">

@@ -6,6 +6,7 @@ import PostsList from '../Pages/AllPost/AllPost';
 import Announcements from '../Pages/Announcements/Announcements';
 import AboutSection from '../Pages/About/About';
 import ContactSection from '../Pages/ContackHomePage/ContackHomePage';
+import FAQ from '../Pages/Faqs/FAQs';
 
 
 
@@ -17,6 +18,7 @@ const HomePage = () => {
             <Announcements></Announcements>
             <PostsList></PostsList>
             <AboutSection></AboutSection>
+            <FAQ></FAQ>
             <ContactSection></ContactSection>
         </div>
     );

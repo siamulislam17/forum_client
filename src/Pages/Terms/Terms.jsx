@@ -16,7 +16,7 @@ const Terms = () => {
     <div className={`${containerBg} min-h-screen px-6 py-16 transition-all duration-500`}>
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Fancy Gradient Title */}
-        <h1 className="text-3xl mt-9 font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-purple-600">
+        <h1 className="text-3xl mt-9 font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-purple-600">
           Terms & Conditions
         </h1>
 

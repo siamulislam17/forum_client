@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { AuthContext } from './AuthContext';
 import { auth } from '../FireBaseFunctionality/firebase.config';
+import Swal from 'sweetalert2';
 
 const AuthProvider = ({children}) => {
     const [user,setUser] = useState(null);
@@ -57,11 +58,21 @@ const AuthProvider = ({children}) => {
         return signOut(auth);
     }
 
+
+
+    const handleForgotPassword = async (email) => {
+        if (!email) throw new Error("Email is required");
+        return await sendPasswordResetEmail(auth, email);
+    };
+
+
+
      // Dark mode toggle
     const [toggleDarkMode, setToggleDarkMode] = useState(false);
 
     const AuthInfo = {
         CreateAccountWithEmail,
+        handleForgotPassword ,
         SignIn,
         user,
         loading,

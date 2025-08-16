@@ -13,7 +13,7 @@ const ContactUsGoogleForm = () => {
       }`}
     >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold mb-8 text-center text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
+        <h2 className="text-3xl font-bold mb-8 text-center text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
           Contact Us
         </h2>
 

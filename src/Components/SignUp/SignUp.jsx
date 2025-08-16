@@ -6,6 +6,9 @@ import { FaEye, FaEyeSlash, FaGoogle } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import axios from 'axios';
 import UseURL from '../../UrlInstance/UseURL';
+import animation from '../../../public/Login.json';
+import { Player } from '@lottiefiles/react-lottie-player';
+
 
 
 const SignUp = () => {
@@ -86,9 +89,15 @@ const SignUp = () => {
           ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white'
           : 'bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 text-gray-900'}`}>
       
-      {/* Left Banner */}
-      <div className="md:w-1/2 w-full p-8 text-center">
-        <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">
+      {/* Left Animation */}
+      <div className="md:w-1/2 w-full p-8 flex flex-col items-center">
+        <Player
+          autoplay
+          loop
+          src={animation}
+          style={{ height: '400px', width: '400px' }}
+        />
+        <h2 className="text-3xl md:text-4xl font-extrabold mt-4 text-center">
           <Typewriter
             words={['Join the Community', 'Explore More of Your Life']}
             loop
@@ -99,13 +108,10 @@ const SignUp = () => {
             delaySpeed={2000}
           />
         </h2>
-        <p className={`${toggleDarkMode ? 'text-gray-300' : 'text-gray-700'} text-lg max-w-md mx-auto`}>
-          Become a part of our amazing community and unlock new experiences every day.
-        </p>
       </div>
 
       {/* Right Form */}
-      <div className={`md:w-1/2 mx-6 mt-7  p-8 max-w-md rounded-3xl shadow-xl transition-colors duration-300
+      <div className={` mx-6 mt-7  p-8 max-w-2xl mb-10 rounded-3xl shadow-xl transition-colors duration-300
         ${toggleDarkMode ? 'bg-gray-900' : 'bg-white'}`}>
         <h3 className="text-3xl font-bold mb-8 text-center">Create an Account</h3>
 

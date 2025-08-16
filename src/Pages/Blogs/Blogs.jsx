@@ -47,10 +47,10 @@ const Blogs = () => {
     <div className={`${containerBg} min-h-screen px-6 py-16 transition-all duration-500`}>
       <div className="max-w-4xl mx-auto space-y-8">
         {/* Gradient Title */}
-        <h1 className="text-3xl pt-6 font-extrabold text-center bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-purple-600">
+        <h1 className="text-3xl pt-6  font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-600 to-purple-600">
           Our Blogs
         </h1>
-        <p className={`text-center text-lg ${sectionText}`}>
+        <p className={`text-center text-gray-700 text-lg ${sectionText}`}>
           Read our latest insights and tutorials on development, design, and more.
         </p>
 
