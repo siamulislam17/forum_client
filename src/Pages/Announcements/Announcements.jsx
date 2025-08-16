@@ -48,12 +48,12 @@ const Announcements = ({ showCountOnly = false }) => {
   const dateText = toggleDarkMode ? 'text-gray-400' : 'text-gray-500';
 
   return (
-    <div className={`w-full mx-auto px-4 md:px-16 py-24 ${containerBg}`}>
-      <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text flex items-center gap-2">
+    <div className={`w-full  mx-auto px-4 md:px-16 py-24 ${containerBg}`}>
+      <h2 className="text-3xl text-center mx-auto font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-600 text-transparent bg-clip-text flex justify-center items-center gap-2">
         <FaBullhorn /> Announcements
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid max-w-[1600px] mx-auto grid-cols-1 md:grid-cols-2 gap-6">
         {announcements.map((item) => (
           <div
             key={item._id}

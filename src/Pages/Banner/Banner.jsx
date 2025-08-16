@@ -44,7 +44,7 @@ const Banner = () => {
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-blue-50 text-gray-800'
       }`}
     >
-      <div className="grid md:grid-cols-2 items-center gap-10">
+      <div className="grid max-w-[1600px] mx-auto md:grid-cols-2 items-center gap-10">
         {/* Left - Text and Search */}
         <div>
           <h1 className="text-4xl font-bold mb-4 leading-snug">

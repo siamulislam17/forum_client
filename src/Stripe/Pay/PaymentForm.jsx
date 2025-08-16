@@ -9,7 +9,7 @@ const PaymentForm = ({ price = 500 }) => {
   const stripe = useStripe();
   const elements = useElements();
   const axiosSecure = UseAxiosSecure();
-  const { user, toggleDarkMode } = useContext(AuthContext); // Using user and toggleDarkMode
+  const {  toggleDarkMode } = useContext(AuthContext); // Using user and toggleDarkMode
 
   const [clientSecret, setClientSecret] = useState('');
   const [processing, setProcessing] = useState(false);

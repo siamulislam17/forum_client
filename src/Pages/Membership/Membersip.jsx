@@ -8,7 +8,7 @@ import { AuthContext } from '../../Context/AuthContext';
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHER_KEY);
 
 const Membership = () => {
-  const { user, toggleDarkMode } = useContext(AuthContext);
+  const { toggleDarkMode } = useContext(AuthContext);
   const price = 10; // Membership cost
 
   return (

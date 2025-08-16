@@ -36,7 +36,7 @@ const Navbar = () => {
   const bgClass = toggleDarkMode ? 'bg-gray-900/80' : 'bg-white/30';
 
   return (
-    <div className={`fixed top-2 left-1/2 -translate-x-1/2 z-50 w-[95%] rounded-2xl ${bgClass} backdrop-blur-md shadow-md px-4 py-3 flex justify-between items-center`}>
+    <div className={`fixed  top-2 left-1/2 -translate-x-1/2 z-50 w-[95%] rounded-2xl ${bgClass} backdrop-blur-md shadow-md px-4 py-3 flex justify-between items-center`}>
       {/* Logo & Site Name */}
       <div className={`flex items-center gap-2 ${textColorClass}`}>
         <img src={Logo} alt="Logo" className="w-8 h-8 rounded-full" />
