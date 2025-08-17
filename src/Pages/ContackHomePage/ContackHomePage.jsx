@@ -1,8 +1,14 @@
 import { useNavigate } from 'react-router';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaWhatsapp, FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa';
+import { useContext } from 'react';
+import { AuthContext } from '../../Context/AuthContext';
 
-const ContactSection = ({ toggleDarkMode }) => {
+const ContactSection = () => {
   const navigate = useNavigate();
+  const { toggleDarkMode } = useContext(AuthContext);
+      const containerBg = toggleDarkMode
+          ? 'bg-gray-900 text-white'
+          : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-900';
 
   const contactInfo = [
     { icon: <FaMapMarkerAlt />, label: 'Location', value: 'Dhaka, Bangladesh' },
@@ -18,12 +24,8 @@ const ContactSection = ({ toggleDarkMode }) => {
   ];
 
   return (
-    <div className={`py-20 px-6 transition-colors duration-500 ${
-      toggleDarkMode
-        ? 'bg-gray-900 text-white'
-        : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-900'
-    }`}>
-      <h2 className="text-3xl font-extrabold text-center mb-6 bg-gradient-to-r from-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
+    <div className={` px-6 pb-20 transition-colors duration-500 ${containerBg}`}>
+      <h2 className="text-3xl font-bold text-center mb-6 bg-gradient-to-r from-fuchsia-600 to-purple-600 bg-clip-text text-transparent">
         Get in Touch
       </h2>
       <p className="text-center mb-12 max-w-2xl mx-auto text-lg">
@@ -58,7 +60,7 @@ const ContactSection = ({ toggleDarkMode }) => {
       <div className="text-center mt-16">
         <button
           onClick={() => navigate('/contact-google-form')}
-          className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105"
+          className="bg-purple-600 hover:bg-purple-700 text-white  py-3 px-8 rounded-full text-lg transition-transform transform hover:scale-105"
         >
           Send a Message
         </button>

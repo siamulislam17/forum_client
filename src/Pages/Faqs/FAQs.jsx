@@ -32,7 +32,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className={`w-full mx-auto p-6  ${containerBg} py-10`}>
+    <div className={`w-full mx-auto p-6  ${containerBg} `}>
       <h2 className="text-3xl font-bold mb-6 text-center ext-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600 bg-clip-text text-transparent">Frequently Asked Questions</h2>
 
       <div className="max-w-4xl mx-auto space-y-2">

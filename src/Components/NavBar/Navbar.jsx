@@ -45,7 +45,9 @@ const Navbar = () => {
   };
 
   // Styling classes based on dark mode
-  const bgClass = toggleDarkMode ? 'bg-gray-900' : 'bg-white';
+  const navBg = toggleDarkMode
+  ? "bg-gray-800 bg-opacity-90 backdrop-blur-md text-white"
+  : "bg-white/80 backdrop-blur-md shadow-md text-gray-900";
   const textColorClass = toggleDarkMode ? 'text-white' : 'text-gray-800';
   const borderClass = toggleDarkMode ? 'border-gray-700' : 'border-gray-200';
   const hoverBgClass = toggleDarkMode ? 'hover:bg-gray-800' : 'hover:bg-gray-100';
@@ -74,7 +76,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 ${bgClass} shadow-md border-b ${borderClass}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 ${navBg} shadow-md border-b ${borderClass}`}>
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">

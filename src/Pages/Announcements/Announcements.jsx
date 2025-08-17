@@ -48,7 +48,7 @@ const Announcements = ({ showCountOnly = false }) => {
   const dateText = toggleDarkMode ? 'text-gray-400' : 'text-gray-500';
 
   return (
-    <div className={`w-full  mx-auto px-4 md:px-16 py-24 ${containerBg}`}>
+    <div className={`w-full  mx-auto px-4 md:px-16  ${containerBg}`}>
       <h2 className="text-3xl text-center mx-auto font-bold mb-6  text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600  text-transparent  bg-clip-text flex justify-center py-6 items-center gap-2">
         <FaBullhorn /> Announcements
       </h2>

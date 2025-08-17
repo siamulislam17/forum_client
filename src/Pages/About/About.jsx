@@ -10,10 +10,10 @@ const AboutSection = () => {
     : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-900';
 
   return (
-    <section className={`${containerBg} py-16 px-6 transition-all duration-500`}>
+    <section className={`${containerBg}  px-6 transition-all duration-500`}>
       <div className="max-w-4xl mx-auto text-center">
         {/* Fancy Title */}
-        <h2 className="text-2xl md:text-3xl font-extrabold mb-6 bg-clip-text text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600  text-transparent">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6 bg-clip-text text-gradient bg-gradient-to-r from-fuchsia-600 to-purple-600  text-transparent">
           Behind the Threads
         </h2>
 

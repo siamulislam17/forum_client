@@ -19,7 +19,7 @@ const Tags = () => {
 
   return (
     <div
-      className={`py-10 pt-30 px-4 md:px-8 lg:px-16 transition duration-300 ease-in-out ${
+      className={`px-4 md:px-8 lg:px-16 transition duration-300 ease-in-out ${
         toggleDarkMode ? 'bg-gray-900 text-white' : 'bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-gray-800'
       }`}
     >
